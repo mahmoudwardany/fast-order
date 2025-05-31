@@ -6,8 +6,7 @@ export interface IEnvConfig {
 }
 export class ConfigService {
   private readonly ENV_CONFIG: IEnvConfig;
-  NODE_ENV: string;
-  PORT: string;
+
   constructor(environment: string) {
     const filePath = `./env/${environment}.env`;
     const fileExists = fs.existsSync(filePath);
@@ -17,10 +16,13 @@ export class ConfigService {
 
     const config = dotenv.parse(fs.readFileSync(filePath));
     this.ENV_CONFIG = config;
-    this.initializeVariable();
   }
-  private initializeVariable(): void {
-    this.NODE_ENV = this.ENV_CONFIG.NODE_ENV;
-    this.PORT = this.ENV_CONFIG.PORT;
+
+  get(key: string): string {
+    const value = this.ENV_CONFIG[key];
+    if (!value) {
+      throw new Error(`Missing env variable: ${key}`);
+    }
+    return value;
   }
 }
