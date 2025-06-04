@@ -1,14 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from './config/config.service';
-import { ConfigModule } from './config/config.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-  const configService = app.select(ConfigModule).get(ConfigService);
+  const configService = app.get(ConfigService);
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   const port = configService.get('PORT');
-  console.log(`app is listen at ${port}`);
+  await app.listen(port);
+  console.log(`🚀 App is running on http://localhost:${port}`);
 }
 
 bootstrap();
