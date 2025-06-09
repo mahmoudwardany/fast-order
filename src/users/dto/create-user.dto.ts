@@ -5,8 +5,10 @@ import {
   MinLength,
   IsPhoneNumber,
   IsNotEmpty,
+  IsOptional,
 } from 'class-validator';
 import { UserRole } from '../user-role.enum';
+import { AuthProvider } from 'src/auth/auth-provider.enum';
 
 export class CreateUserDto {
   @IsString()
@@ -21,12 +23,15 @@ export class CreateUserDto {
   @IsNotEmpty()
   phone: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(6)
-  @IsNotEmpty()
-  password: string;
+  password?: string;
 
-  @IsEnum(UserRole)
-  @IsNotEmpty()
-  role: UserRole;
+  @IsEnum(AuthProvider)
+  provider: AuthProvider;
+
+  @IsOptional()
+  @IsString()
+  googleId?: string;
 }
