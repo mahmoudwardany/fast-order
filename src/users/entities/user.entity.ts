@@ -1,9 +1,11 @@
 import { AbstractEntity } from 'src/shared/abstract-db';
-import { Column, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../user-role.enum';
+import { AuthProvider } from 'src/auth/auth-provider.enum';
 
+@Entity('user')
 export class User extends AbstractEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
   @Column()
@@ -12,10 +14,13 @@ export class User extends AbstractEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   phone: string;
 
-  @Column({ select: false })
+  @Column({ type: 'enum', enum: AuthProvider })
+  provider: string;
+
+  @Column({ select: false, nullable: true })
   password: string;
 
   @Column({ type: 'enum', enum: UserRole })

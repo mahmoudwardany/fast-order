@@ -13,7 +13,7 @@ export class UsersService {
     return this.usersRepository.findAll();
   }
 
-  findOne(email: string) {
+  findOneByEmail(email: string) {
     return this.usersRepository.findOneByEmail(email);
   }
 }
