@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '../config/config.module';
-import { ConfigService } from '../config/config.service';
+import { ConfigModule } from '../modules/config/config.module';
+import { ConfigService } from '../modules/config/config.service';
 import { getDataBaseConfig } from './database.config';
 
 @Module({
@@ -19,8 +19,7 @@ import { getDataBaseConfig } from './database.config';
           password: dbConfig.password,
           database: dbConfig.name,
           entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-          synchronize:
-            configService.get('NODE_ENV') === 'development' ? true : false,
+          synchronize: false,
         };
       },
     }),

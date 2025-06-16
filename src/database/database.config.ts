@@ -1,4 +1,4 @@
-import { ConfigService } from '../config/config.service';
+import { ConfigService } from '../modules/config/config.service';
 
 export interface DatabaseConfig {
   host: string;
