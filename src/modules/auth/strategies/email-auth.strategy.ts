@@ -9,8 +9,8 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from '../dto/login.dto';
 import {
-  ILocalRegisterStrategy,
-  IEmailLoginStrategy,
+  IRegisterStrategy,
+  ILoginStrategy,
 } from '../interface/auth-strategy.interface';
 import { UsersService } from 'src/modules/users/users.service';
 import { AuthProvider } from 'src/utils/enum/auth-provider.enum';
@@ -18,9 +18,7 @@ import { generateAccessToken } from 'src/utils/logic/generate-token.util';
 import { User } from 'src/modules/users/entities/user.entity';
 
 @Injectable()
-export class EmailAuthStrategy
-  implements ILocalRegisterStrategy, IEmailLoginStrategy
-{
+export class EmailAuthStrategy implements IRegisterStrategy, ILoginStrategy {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,

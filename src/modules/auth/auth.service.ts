@@ -3,10 +3,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { AuthFactories } from './factories/auth-strategy.factory';
 import { GoogleProfileDto } from './dto/google-profile.dto';
-import {
-  IEmailLoginStrategy,
-  IGoogleLoginStrategy,
-} from './interface/auth-strategy.interface';
+import { ILoginStrategy } from './interface/auth-strategy.interface';
 import { User } from '../users/entities/user.entity';
 import { AuthProvider } from 'src/utils/enum/auth-provider.enum';
 
@@ -24,19 +21,12 @@ export class AuthService {
     return provider.register(payload);
   }
 
-  async loginLocal(payload: LoginDto): Promise<{ accessToken: string }> {
-    const strategy = this.authFactories.getLoginStrategy(
-      AuthProvider.LOCAL,
-    ) as IEmailLoginStrategy;
-    return strategy.login(payload);
-  }
-
-  async loginGoogle(
-    profile: GoogleProfileDto,
+  async loginLocal(
+    payload: LoginDto | GoogleProfileDto,
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const strategy = this.authFactories.getLoginStrategy(
-      AuthProvider.GOOGLE,
-    ) as IGoogleLoginStrategy;
-    return strategy.login(profile);
+      AuthProvider.LOCAL,
+    ) as ILoginStrategy;
+    return strategy.login(payload);
   }
 }
