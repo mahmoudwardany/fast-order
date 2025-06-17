@@ -43,6 +43,7 @@ export class EmailAuthStrategy implements IRegisterStrategy, ILoginStrategy {
     });
     return user;
   }
+
   async login(
     data: LoginDto,
   ): Promise<{ accessToken: string; refreshToken: string }> {
