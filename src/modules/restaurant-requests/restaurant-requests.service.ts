@@ -19,8 +19,8 @@ export class RestaurantRequestService {
     return this.repo.create({ ...dto, user });
   }
 
-  approve(id: number, payload: AdminCommentDto) {
-    return this.commandBus.execute(new ApproveRequestCommand(id, payload));
+  approve(id: number) {
+    return this.commandBus.execute(new ApproveRequestCommand(id));
   }
 
   reject(id: number, payload: AdminCommentDto) {

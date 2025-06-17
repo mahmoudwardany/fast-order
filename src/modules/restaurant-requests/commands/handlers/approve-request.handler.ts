@@ -24,8 +24,6 @@ export class ApproveRequestHandler
 
     request.approve();
 
-    request.adminComment = command.payload.adminComment;
-
     await this.repo.save(request);
 
     this.event.emit('request.approved', request);
