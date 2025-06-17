@@ -6,8 +6,8 @@ import { Queue } from 'bull';
 export class MailQueueService {
   constructor(@InjectQueue('mail') private mailQueue: Queue) {}
 
-  async sendApprovalEmail(to: string, name: string, adminComment: string) {
-    await this.mailQueue.add('send-approval', { to, name, adminComment });
+  async sendApprovalEmail(to: string, name: string) {
+    await this.mailQueue.add('send-approval', { to, name });
   }
 
   async sendRejectionEmail(to: string, name: string, adminComment: string) {

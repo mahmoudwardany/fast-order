@@ -11,7 +11,6 @@ export class RequestEventListener {
     return await this.mailQueueService.sendApprovalEmail(
       request.user.email,
       request.restaurantName,
-      request.adminComment,
     );
   }
 

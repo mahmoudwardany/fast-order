@@ -26,11 +26,8 @@ export class RestaurantRequestController {
 
   @UseGuards(AuthGuard, AdminGuard)
   @Patch(':id/approve')
-  async approve(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: AdminCommentDto,
-  ) {
-    await this.service.approve(id, payload);
+  async approve(@Param('id', ParseIntPipe) id: number) {
+    await this.service.approve(id);
     return {
       statusCode: 200,
       message: 'Request approved successfully',
