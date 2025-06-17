@@ -2,9 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { EmailAuthStrategy } from '../strategies/email-auth.strategy';
 import { GoogleAuthStrategy } from '../strategies/google-auth.strategy';
 import {
-  IEmailLoginStrategy,
-  IGoogleLoginStrategy,
-  ILocalRegisterStrategy,
+  ILoginStrategy,
+  IRegisterStrategy,
 } from '../interface/auth-strategy.interface';
 import { AuthProvider } from 'src/utils/enum/auth-provider.enum';
 
@@ -15,13 +14,11 @@ export class AuthFactories {
     private readonly googleAuthStrategy: GoogleAuthStrategy,
   ) {}
 
-  getRegisterStrategy(): ILocalRegisterStrategy {
+  getRegisterStrategy(): IRegisterStrategy {
     return this.emailAuthStrategy;
   }
 
-  getLoginStrategy(
-    provider: AuthProvider,
-  ): IEmailLoginStrategy | IGoogleLoginStrategy {
+  getLoginStrategy(provider: AuthProvider): ILoginStrategy {
     switch (provider) {
       case AuthProvider.LOCAL:
         return this.emailAuthStrategy;

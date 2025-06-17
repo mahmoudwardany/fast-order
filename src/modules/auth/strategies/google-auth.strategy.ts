@@ -2,12 +2,12 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { GoogleProfileDto } from '../dto/google-profile.dto';
-import { IGoogleLoginStrategy } from '../interface/auth-strategy.interface';
 import { AuthProvider } from 'src/utils/enum/auth-provider.enum';
 import { generateAccessToken } from 'src/utils/logic/generate-token.util';
+import { ILoginStrategy } from '../interface/auth-strategy.interface';
 
 @Injectable()
-export class GoogleAuthStrategy implements IGoogleLoginStrategy {
+export class GoogleAuthStrategy implements ILoginStrategy {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,

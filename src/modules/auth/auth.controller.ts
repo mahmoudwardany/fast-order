@@ -48,7 +48,7 @@ export class AuthController {
 
     const profile = req.user as GoogleProfileDto;
     const { accessToken, refreshToken } =
-      await this.authService.loginGoogle(profile);
+      await this.authService.loginLocal(profile);
 
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
