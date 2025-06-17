@@ -25,7 +25,7 @@ export class AuthService {
     payload: LoginDto | GoogleProfileDto,
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const strategy = this.authFactories.getLoginStrategy(
-      AuthProvider.LOCAL,
+      payload.provider,
     ) as ILoginStrategy;
     return strategy.login(payload);
   }
