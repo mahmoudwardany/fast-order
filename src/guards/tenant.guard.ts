@@ -17,6 +17,7 @@ export class TenantGuard implements CanActivate {
     if (!isNaN(restaurantId)) {
       throw new ForbiddenException('Invalid restaurant ID');
     }
+
     const restaurant =
       await this.restaurantService.findRestaurantByTenantId(restaurantId);
 
