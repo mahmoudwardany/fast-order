@@ -1,4 +1,10 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { ErrorLoggerService } from '../modules/error-logs/error-logs.service';
 
 @Catch()
@@ -8,7 +14,11 @@ export class GlobalFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest();
     const response = ctx.getResponse();
-    const status = exception.getStatus() || 500;
+    const status =
+      exception instanceof HttpException
+        ? exception.getStatus()
+        : HttpStatus.INTERNAL_SERVER_ERROR;
+
     const message = exception?.response
       ? exception?.response.message
       : 'Internal server error';

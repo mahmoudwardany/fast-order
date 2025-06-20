@@ -11,6 +11,7 @@ import { RejectRequestHandler } from './commands/handlers/reject-request.handler
 import { ApproveRequestHandler } from './commands/handlers/approve-request.handler';
 import { FindAllPendingRequestHandler } from './commands/handlers/find-pending-requests.handler';
 import { RequestEventListener } from './events/restaurant-request.event';
+import { RestaurantModule } from '../restaurant/restaurant.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RequestEventListener } from './events/restaurant-request.event';
     TypeOrmModule.forFeature([RestaurantRequest]),
     EventEmitterModule.forRoot(),
     CqrsModule,
+    RestaurantModule,
   ],
   controllers: [RestaurantRequestController],
   providers: [
