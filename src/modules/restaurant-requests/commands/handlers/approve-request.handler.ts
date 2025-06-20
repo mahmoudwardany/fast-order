@@ -1,7 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { ApproveRequestCommand } from '../approve-request.command';
+
+import { RestaurantService } from 'src/modules/restaurant/restaurant.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { DataSource } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { ApproveRequestCommand } from '../approve-request.command';
 import { RestaurantRequestRepository } from '../../repository/resturant-request.repository';
 
 @CommandHandler(ApproveRequestCommand)
@@ -10,7 +13,9 @@ export class ApproveRequestHandler
 {
   constructor(
     private readonly repo: RestaurantRequestRepository,
+    private readonly restaurantService: RestaurantService,
     private readonly event: EventEmitter2,
+    private readonly dataSource: DataSource,
   ) {}
 
   async execute(command: ApproveRequestCommand) {
@@ -22,10 +27,21 @@ export class ApproveRequestHandler
       );
     }
 
-    request.approve();
+    await this.dataSource.transaction(async (manager) => {
+      request.approve();
+      await manager.save(request);
 
-    await this.repo.save(request);
+      await this.restaurantService.createRestaurant(
+        {
+          tenantId: request.user.id,
+          name: request.restaurantName,
+          logo: request.logo,
+          address: request.address,
+        },
+        manager,
+      );
 
-    this.event.emit('request.approved', request);
+      this.event.emit('request.approved', request);
+    });
   }
 }
