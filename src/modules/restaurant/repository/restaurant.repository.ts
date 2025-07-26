@@ -14,7 +14,7 @@ export class RestaurantRepository {
   }
 
   async findRestaurantByTenantId(id: number) {
-    return this.repo.findOne({ where: { tenantId: id } });
+    return this.repo.findOneBy({ tenantId: id });
   }
 
   getRepo() {
