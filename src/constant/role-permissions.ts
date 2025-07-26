@@ -9,6 +9,6 @@ export const ROLE_PERMISSIONS = {
     'restore_item',
     'create_item',
   ],
-  [UserRole.CUSTOMER]: ['view_item'],
-  [UserRole.ADMIN]: ['view_item', 'delete_item'],
+  [UserRole.CUSTOMER]: ['view_item', 'view_restaurant'],
+  [UserRole.ADMIN]: ['view_item', 'delete_item', 'view_restaurant'],
 };
