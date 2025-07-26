@@ -16,7 +16,7 @@ export class RestaurantService {
     return repo.save(restaurant);
   }
 
-  async findRestaurantByTenantId(id: number) {
+  findRestaurantByTenantId(id: number) {
     return this.restaurantRepository.findRestaurantByTenantId(id);
   }
 }

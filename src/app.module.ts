@@ -12,6 +12,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { RestaurantRequestModule } from './modules/restaurant-requests/restaurant-requests.module';
 import { ErrorlogModule } from './modules/error-logs/Error-logs.module';
+import { MenuItemsModule } from './modules/menu-items/menu-item.module';
 
 dotenv.config({
   path: path.join(process.cwd(), 'env', `${process.env.NODE_ENV?.trim()}.env`),
@@ -33,6 +34,7 @@ dotenv.config({
     }),
     EventEmitterModule.forRoot(),
     ErrorlogModule,
+    MenuItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

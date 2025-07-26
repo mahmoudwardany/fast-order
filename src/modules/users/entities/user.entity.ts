@@ -25,4 +25,11 @@ export class User extends AbstractEntity {
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.CUSTOMER })
   role: UserRole;
+
+  updateRole(newRole: UserRole) {
+    if (newRole === UserRole.ADMIN) {
+      throw new Error('You Cannot make this action');
+    }
+    this.role = newRole;
+  }
 }
