@@ -17,6 +17,13 @@ export class RestaurantRepository {
     return this.repo.findOneBy({ tenantId: id });
   }
 
+  async findAllWithPagination(limit: number, offset: number) {
+    return this.repo.find({
+      skip: offset,
+      take: limit,
+    });
+  }
+
   getRepo() {
     return this.repo;
   }
